@@ -17,12 +17,12 @@
     <form method="POST" action="${contextPath}/login" class="form-signin">
         <h3 class="form-heading text-center">Sign in to Muster</h3>
         <br/>
-        <div class="form-group ${error != null ? 'has-error' : ''}">
+        <div class="form-group">
             <span>${message}</span>
             <input name="username" type="text" class="form-control" placeholder="Username"
                    autofocus="true"/>
             <input name="password" type="password" class="form-control" placeholder="Password"/>
-            <span>${error}</span>
+            <span class="${error != null ? 'has-error' : ''}">${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>

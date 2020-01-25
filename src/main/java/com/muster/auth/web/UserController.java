@@ -1,6 +1,7 @@
 package com.muster.auth.web;
 
 import com.muster.auth.model.User;
+import com.muster.auth.service.SecurityService;
 import com.muster.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SecurityService securityService;
+
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -30,6 +34,7 @@ public class UserController {
         }
 
         userService.save(userForm);
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
         return "redirect:/welcome";
     }
