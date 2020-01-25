@@ -3,6 +3,7 @@ package com.muster.auth.web;
 import com.muster.auth.model.User;
 import com.muster.auth.service.SecurityService;
 import com.muster.auth.service.UserService;
+import com.muster.auth.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private SecurityService securityService;
+    @Autowired
+    private UserValidator userValidator;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -29,6 +31,8 @@ public class UserController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+        userValidator.validate(userForm, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "registration";
         }
